@@ -1,11 +1,7 @@
 package com.socialinspectors.retriever.twitter;
 
-import java.util.Set;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import com.socialinspectors.retriever.settings.users.FetchingPeople;
 
 import twitter4j.FilterQuery;
 import twitter4j.StatusListener;
@@ -52,15 +48,6 @@ public class TwitterStreamBuilder {
 		FilterQuery filterQuery = new FilterQuery();
 		filterQuery.locations(createBoundingBox(latitude, longitude));
 		filterQuery.language(new String[] { "en" });
-
-		Set<String> keySet = FetchingPeople.getSettings().keySet();
-		String[] filterMentions = new String[keySet.size()];
-		filterMentions = (String[]) keySet.toArray(filterMentions);
-		for (int i = 0; i < filterMentions.length; i++) {
-			filterMentions[i] = "@".concat(filterMentions[i]);
-		}
-		filterQuery.track(filterMentions);
-
 		twitterStream.filter(filterQuery);
 		return twitterStream;
 	}
@@ -79,7 +66,7 @@ public class TwitterStreamBuilder {
 		double var = longitude;
 		longitude = latitude;
 		latitude = var;
-		double rate = 0.5;
+		double rate = 7;
 		double[][] box = { { latitude - rate, longitude - rate }, { latitude + rate, longitude + rate }
 
 		};

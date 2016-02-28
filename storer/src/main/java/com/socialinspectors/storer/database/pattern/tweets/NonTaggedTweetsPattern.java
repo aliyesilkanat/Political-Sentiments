@@ -18,12 +18,11 @@ public class NonTaggedTweetsPattern extends TweetsPattern {
 	 * @param country
 	 * @param city
 	 */
-	public NonTaggedTweetsPattern(String authorUserName,
-			String authorScreenName, String authorUri, String authorPictureUri,
-			String tweet, String tweetUri, String date, double locationX,
-			double locationY, String country, String city) {
-		super(authorUserName, authorScreenName, authorUri, authorPictureUri,
-				tweet, tweetUri, date, locationX, locationY, country, city);
+	public NonTaggedTweetsPattern(String authorUserName, String authorScreenName, String authorUri,
+			String authorPictureUri, String tweet, String tweetUri, String date, double locationX, double locationY,
+			String country, String city, int politicPersonId) {
+		super(authorUserName, authorScreenName, authorUri, authorPictureUri, tweet, tweetUri, date, locationX,
+				locationY, country, city, politicPersonId);
 	}
 
 	/**
@@ -41,12 +40,11 @@ public class NonTaggedTweetsPattern extends TweetsPattern {
 	 * @param state
 	 * @param city
 	 */
-	public NonTaggedTweetsPattern(String authorUserName,
-			String authorScreenName, String authorUri, String authorPictureUri,String tweet,
-			String tweetUri, String date, double locationX, double locationY,
-			String country, String state, String city) {
-		super(authorUserName, authorScreenName, authorUri,authorPictureUri, tweet, tweetUri,
-				date, locationX, locationY, country, city);
+	public NonTaggedTweetsPattern(String authorUserName, String authorScreenName, String authorUri,
+			String authorPictureUri, String tweet, String tweetUri, String date, double locationX, double locationY,
+			String country, String state, String city, int politicPersonId) {
+		super(authorUserName, authorScreenName, authorUri, authorPictureUri, tweet, tweetUri, date, locationX,
+				locationY, country, city, politicPersonId);
 		this.state = state;
 	}
 

@@ -28,11 +28,12 @@ public class TwitterExtractor extends UntypedActor {
 			Object[] params = (Object[]) message;
 			Status status = (Status) params[0];
 			int index = (int) params[1];
-			JsonObject extract = extractTweetData(status, FetchingLocations.getSettings().get(index));
+			int politicLeaderId = (int) params[2];
+			JsonObject extract = extractTweetData(status, FetchingLocations.getSettings().get(index), politicLeaderId);
 			send2Analyzer(extract);
 			getLogger().trace("extracted status sent to analyzer");
 		} catch (Exception e) {
-			getLogger().error("cannot cast message to Status", e);
+			getLogger().error("cannot extract information from twitter status", e);
 			unhandled(message);
 		}
 
@@ -45,7 +46,7 @@ public class TwitterExtractor extends UntypedActor {
 		receiverActor.tell(MessageCreator.create(AnalyzerMessages.ANALYZE, extract), getSelf());
 	}
 
-	public JsonObject extractTweetData(Status status, FetchingLocationsHolder settings) {
+	public JsonObject extractTweetData(Status status, FetchingLocationsHolder settings, int politicLeaderId) {
 		String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(status.getCreatedAt());
 		String tweet = status.getText();
 		String tweetUri = extractTweetURL(status);
@@ -58,7 +59,7 @@ public class TwitterExtractor extends UntypedActor {
 		double latitude = settings.getLatitude();
 		double longitude = settings.getLongitude();
 		JsonObject object = createJsonObejct(date, tweet, tweetUri, authorScreenName, authorName, authorUri,
-				authorProfilePictureUri, city, state, latitude, longitude);
+				authorProfilePictureUri, city, state, latitude, longitude, politicLeaderId);
 		return object;
 
 	}
@@ -81,11 +82,12 @@ public class TwitterExtractor extends UntypedActor {
 	 * @param state2
 	 * @param latitude
 	 * @param longitude
+	 * @param politicLeaderId
 	 * @return
 	 */
 	private JsonObject createJsonObejct(String date, String tweet, String tweetUri, String authorScreenName,
 			String authorName, String authorUri, String authorProfilePic, String city, String state, double latitude,
-			double longitude) {
+			double longitude, int politicPersonId) {
 		JsonObject jsonObject = new JsonObject();
 		jsonObject.addProperty(OntologyProperties.TWEET, tweet);
 		jsonObject.addProperty(OntologyProperties.TWEET_URI, tweetUri);
@@ -102,6 +104,7 @@ public class TwitterExtractor extends UntypedActor {
 		}
 		jsonObject.addProperty(OntologyProperties.LATITUDE, latitude);
 		jsonObject.addProperty(OntologyProperties.LONGITUDE, longitude);
+		jsonObject.addProperty(OntologyProperties.PERSON_ID, politicPersonId);
 		return jsonObject;
 	}
 

@@ -5,9 +5,6 @@ import org.bson.Document;
 import com.mongodb.client.MongoDatabase;
 import com.socialinspectors.analyzer.settings.AnalysisSettingsHolder;
 import com.socialinspectors.data.DatabaseConstants;
-import com.socialinspectors.utils.OntologyProperties;
-
-import edu.stanford.nlp.patterns.Data;
 
 public class AnalysisSettingsLoader {
 
@@ -31,6 +28,7 @@ public class AnalysisSettingsLoader {
 	}
 
 	Document filterByTagId(Document settingsDocument) {
-		return new Document(CollectionConstants.ID, settingsDocument.getInteger(CollectionConstants.CURRENT_TECHNIQUE_ID));
+		return new Document(CollectionConstants.ID,
+				settingsDocument.getInteger(CollectionConstants.CURRENT_TECHNIQUE_ID));
 	}
 }

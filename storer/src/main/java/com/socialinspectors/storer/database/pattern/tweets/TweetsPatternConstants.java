@@ -29,4 +29,5 @@ public class TweetsPatternConstants {
 	public static final String TAG_ID = "id";
 
 	public static final String TAG_RESULT = "result";
+	public static final String MENTIONED_PERSON_ID = "mentionedPersonId";
 }

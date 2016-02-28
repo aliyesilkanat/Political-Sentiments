@@ -24,7 +24,7 @@ public class NonTaggedTweetsPatternTest {
 				"A new favorite: Hot Since 82 & Habischman - Leave Me (Moda Black) by @hotsince82 https://soundcloud.com/hotsince-82/hot-since-82-habischman-leave … on #SoundCloud",
 				"https://twitter.com/aliyesilkanat/status/637643909645094912",
 				"2015-08-29", 38.476909, 27.064476, "Turkey", "IZMIRSTATE",
-				"Izmir").getDocument();
+				"Izmir",1).getDocument();
 		String json = document.toJson();
 		System.out.println(json);
 		assertEquals(
@@ -41,7 +41,7 @@ public class NonTaggedTweetsPatternTest {
 				"https://pbs.twimg.com/profile_images/2595463367/f4kuc43hjuq2n6ztf7zj_400x400.jpeg",
 				"A new favorite: Hot Since 82 & Habischman - Leave Me (Moda Black) by @hotsince82 https://soundcloud.com/hotsince-82/hot-since-82-habischman-leave … on #SoundCloud",
 				"https://twitter.com/aliyesilkanat/status/637643909645094912",
-				"2015-08-29", 38.476909, 27.064476, "Turkey", "Izmir")
+				"2015-08-29", 38.476909, 27.064476, "Turkey", "Izmir",1)
 				.getDocument();
 		String json = document.toJson();
 		System.out.println(json);

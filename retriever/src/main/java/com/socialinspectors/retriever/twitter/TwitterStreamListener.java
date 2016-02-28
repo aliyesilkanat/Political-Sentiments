@@ -1,18 +1,22 @@
 package com.socialinspectors.retriever.twitter;
 
+import java.util.Iterator;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import twitter4j.StallWarning;
-import twitter4j.Status;
-import twitter4j.StatusDeletionNotice;
-import twitter4j.StatusListener;
-import akka.actor.ActorRef;
-import akka.actor.Props;
 
 import com.socialinspectors.retriever.RetrieverSystem;
 import com.socialinspectors.retriever.actor.TwitterExtractor;
 import com.socialinspectors.retriever.settings.locations.FetchingLocations;
+import com.socialinspectors.retriever.settings.users.FetchingPeople;
+
+import akka.actor.ActorRef;
+import akka.actor.Props;
+import twitter4j.StallWarning;
+import twitter4j.Status;
+import twitter4j.StatusDeletionNotice;
+import twitter4j.StatusListener;
+import twitter4j.UserMentionEntity;
 
 public class TwitterStreamListener implements StatusListener {
 	private static final Logger logger = LogManager.getLogger(TwitterStreamListener.class.getName());
@@ -36,15 +40,47 @@ public class TwitterStreamListener implements StatusListener {
 	@Override
 	public void onStatus(Status status) {
 		getLogger().debug("fetching from twitter stream, status: {}", status.getText());
-		ActorRef extractor = RetrieverSystem.system.actorOf(Props.create(TwitterExtractor.class));
-		Object[] params = createMessageParams(status);
-		extractor.tell(params, ActorRef.noSender());
+		int politicLeaderId = extractMentionedPoliticLeaderId(status);
+		if (politicLeaderId != -1) {
+			if (getLogger().isTraceEnabled()) {
+				getLogger().trace("found politic leader mention. ID: {}", politicLeaderId);
+			}
+			ActorRef extractor = RetrieverSystem.system.actorOf(Props.create(TwitterExtractor.class));
+			Object[] params = createMessageParams(status, politicLeaderId);
+			extractor.tell(params, ActorRef.noSender());
+		}
 	}
 
-	private Object[] createMessageParams(Status status) {
-		Object[] params = new Object[2];
+	/**
+	 * Extracts mentioned politic leader database id using pre-loaded people
+	 * names'.
+	 * 
+	 * @param status
+	 * @return
+	 */
+	private int extractMentionedPoliticLeaderId(Status status) {
+		int politicPersonId = -1;
+		Iterator<String> iterator = FetchingPeople.getSettings().keySet().iterator();
+
+		while (iterator.hasNext()) {
+			String personName = iterator.next();
+			for (UserMentionEntity mention : status.getUserMentionEntities()) {
+				if (mention.getScreenName().equals(personName)) {
+					politicPersonId = FetchingPeople.getSettings().get(personName).getId();
+					break;
+				}
+
+			}
+		}
+		return politicPersonId;
+
+	}
+
+	private Object[] createMessageParams(Status status, int politicLeaderId) {
+		Object[] params = new Object[3];
 		params[0] = status;
 		params[1] = locationIndex;
+		params[2] = politicLeaderId;
 		return params;
 	}
 

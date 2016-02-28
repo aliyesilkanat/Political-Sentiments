@@ -22,7 +22,7 @@ public class TaggedTweetPatternTest {
 				"A new favorite: Hot Since 82 & Habischman - Leave Me (Moda Black) by @hotsince82 https://soundcloud.com/hotsince-82/hot-since-82-habischman-leave … on #SoundCloud",
 				"https://twitter.com/aliyesilkanat/status/637643909645094912",
 				"2015-08-29", 38.476909, 27.064476, "Turkey", "IZMIRSTATE",
-				"Izmir", OPEN_NLP_CATEGORIZER, HAPPY).getDocument();
+				"Izmir",1, OPEN_NLP_CATEGORIZER, HAPPY).getDocument();
 		String json = document.toJson();
 		System.out.println(json);
 		assertEquals(
@@ -40,7 +40,7 @@ public class TaggedTweetPatternTest {
 				"A new favorite: Hot Since 82 & Habischman - Leave Me (Moda Black) by @hotsince82 https://soundcloud.com/hotsince-82/hot-since-82-habischman-leave … on #SoundCloud",
 				"https://twitter.com/aliyesilkanat/status/637643909645094912",
 				"2015-08-29", 38.476909, 27.064476, "Turkey", "Izmir",
-				OPEN_NLP_CATEGORIZER, HAPPY).getDocument();
+				OPEN_NLP_CATEGORIZER, HAPPY,1).getDocument();
 		String json = document.toJson();
 		System.out.println(json);
 		assertEquals(

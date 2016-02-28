@@ -17,6 +17,7 @@ public class FetchingPeopleHolder {
 		return logger;
 	}
 
+	private int id;
 	private String fullName;
 	private String politics;
 	private String twitterName;
@@ -53,6 +54,7 @@ public class FetchingPeopleHolder {
 		setFullName(document.getString(OntologyProperties.FULL_NAME));
 		setTwitterName(document.getString(OntologyProperties.TWITTER_NAME));
 		setTwitterUrl(document.getString(OntologyProperties.TWITTER_URL));
+		setId(document.getInteger(OntologyProperties.PERSON_ID));
 
 		if (getLogger().isTraceEnabled()) {
 			getLogger().trace("loaded person information from given document: {}", document.toJson());
@@ -80,5 +82,13 @@ public class FetchingPeopleHolder {
 
 	public String toJson() {
 		return new Gson().toJson(this);
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 }

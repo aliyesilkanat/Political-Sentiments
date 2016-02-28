@@ -21,4 +21,6 @@ public class OntologyProperties {
 	public static final String FULL_NAME = "fullName";
 	public static final String TWITTER_NAME = "twitterName";
 	public static final String TWITTER_URL = "twitterUrl";
+	public static final String PERSON_ID = "personId";
+	public static final String COLOR = "color";
 }

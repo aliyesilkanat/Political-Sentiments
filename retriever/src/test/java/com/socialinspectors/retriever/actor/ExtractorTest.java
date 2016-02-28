@@ -40,7 +40,7 @@ public class ExtractorTest {
 		FetchingLocationsHolder settingsHolder = createMockSettings();
 
 		// execution
-		JsonObject extractedObject = underlyingActor.extractTweetData(example, settingsHolder);
+		JsonObject extractedObject = underlyingActor.extractTweetData(example, settingsHolder, 1);
 
 		// assertion
 		assertEquals(

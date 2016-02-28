@@ -30,6 +30,10 @@ public class FetchingPeopleTest {
 		if ((jsonObject.has(OntologyProperties.POLITICS) && jsonObject.get(OntologyProperties.POLITICS).isJsonNull())) {
 			fail("Person has not politics property");
 		}
+		if ((jsonObject.has(OntologyProperties.PERSON_ID)
+				&& jsonObject.get(OntologyProperties.PERSON_ID).isJsonNull())) {
+			fail("Person has not politics property");
+		}
 
 	}
 

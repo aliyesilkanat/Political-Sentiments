@@ -70,7 +70,6 @@ public class RetrieverSystem {
 		createGuardianActor();
 		loadFetchingSettings();
 		startGuardianActor();
-		// createTwitterStream();
 
 	}
 

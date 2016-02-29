@@ -35,7 +35,7 @@ public class ServletInitializer implements ServletContextListener {
 	 * @see ServletContextListener#contextInitialized(ServletContextEvent)
 	 */
 	public void contextInitialized(ServletContextEvent arg0) {
-		// context = new DeploymentContext(REMOTE, SystemNames.TRIGGER);
+		context = new DeploymentContext(REMOTE, SystemNames.TRIGGER);
 	}
 
 }

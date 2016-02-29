@@ -43,7 +43,7 @@ public class TwitterStreamListener implements StatusListener {
 		int politicLeaderId = extractMentionedPoliticLeaderId(status);
 		if (politicLeaderId != -1) {
 			if (getLogger().isTraceEnabled()) {
-				getLogger().trace("found politic leader mention. ID: {}", politicLeaderId);
+				getLogger().info("found politic leader mention. ID: {}", politicLeaderId);
 			}
 			ActorRef extractor = RetrieverSystem.system.actorOf(Props.create(TwitterExtractor.class));
 			Object[] params = createMessageParams(status, politicLeaderId);

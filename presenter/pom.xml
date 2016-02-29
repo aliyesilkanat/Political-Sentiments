@@ -27,6 +27,7 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
+
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
@@ -42,6 +43,13 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.6</version>
 				<configuration>
+					<configuration>
+						<archive>
+							<manifestEntries>
+								<Dependencies>com.socialinspectors</Dependencies>
+							</manifestEntries>
+						</archive>
+					</configuration>
 					<warSourceDirectory>WebContent</warSourceDirectory>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>

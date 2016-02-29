@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<title>Social Inspectors</title>
+<meta name="generator" content="Bootply" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<link href="css/bootstrap.css" rel="stylesheet">
+<!--[if lt IE 9]>
+			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+<link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+	<div class="navbar-wrapper">
+		<div class="container">
+			<div class="navbar navbar-inverse navbar-static-top">
+
+				<div class="navbar-header">
+					<a class="navbar-toggle" data-toggle="collapse"
+						data-target=".navbar-collapse"> <span class="icon-bar"></span>
+						<span class="icon-bar"></span> <span class="icon-bar"></span>
+					</a> <a class="navbar-brand" href="#">Bootstrap 3</a>
+				</div>
+				<div class="navbar-collapse collapse">
+					<ul class="nav navbar-nav">
+						<li class="active"><a href="#">Home</a></li>
+						<li><a href="http://www.bootply.com" target="ext">About</a></li>
+						<li><a href="#contact">Contact</a></li>
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="#">Action</a></li>
+								<li><a href="#">Another action</a></li>
+								<li><a href="#">Something else here</a></li>
+								<li class="divider"></li>
+								<li><a href="#">Separated link</a></li>
+								<li><a href="#">One more separated link</a></li>
+							</ul></li>
+					</ul>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<div class="container" ng-controller="HomeCtrl"
+		style="margin-top: 100px;">
+		<div class="row">
+			<div class="col-md-2"></div>
+			<div class="col-md-8">
+
+				<h1 style="text-align: center;">U.S. Election '16 Candidates
+					Tweet Analysis</h1>
+			</div>
+
+			<div class="col-md-2"></div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-3"></div>
+			<div class="col-md-6">
+				<div class="row">
+
+					<h2 style="text-align: center;">General Tweet Ratio</h2>
+				</div>
+				<div class="row">
+					<div id="generalRatio"></div>
+				</div>
+				<div class="row">
+
+					<h3 style="text-align: center;">Total Tweet Count:
+						{{totalTweetCount}}</h3>
+				</div>
+			</div>
+			<div class="col-md-3"></div>
+		</div>
+
+		<div class="row">
+
+			<div class="col-md-6">
+
+				<div class="row">
+					<h2 style="text-align: center;">Positive Tweets Ratio</h2>
+				</div>
+				<div class="row">
+					<div id="positiveRatio"></div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="row">
+					<h2 style="text-align: center;">Negative Tweets Ratio</h2>
+				</div>
+				<div class="row">
+					<div id="negativeRatio"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script
+		src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+	<script src="js/libs/angular.js"></script>
+	<script src="js/libs/bootstrap.js"></script>
+	<script src="js/libs/d3.js"></script>
+	<script src="js/libs/d3pie.js"></script>
+	<script src="js/controllers/home.js"></script>
+</body>
+</html>

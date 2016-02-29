@@ -3,9 +3,9 @@ package com.socialinspectors.retriever.actor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.socialinspectors.actor.Actor;
 import com.socialinspectors.retriever.actor.dispatcher.GuardianRetrieverDispatcher;
 import com.socialinspectors.retriever.settings.locations.FetchingLocations;
+import com.socialinspectors.utils.actor.Actor;
 
 import akka.actor.ActorRef;
 import akka.actor.Props;

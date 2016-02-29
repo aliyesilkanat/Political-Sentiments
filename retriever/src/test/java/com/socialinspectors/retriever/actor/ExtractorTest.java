@@ -11,10 +11,10 @@ import akka.actor.Props;
 import akka.testkit.TestActorRef;
 
 import com.google.gson.JsonObject;
-import com.socialinspectors.deployment.DeploymentContext;
-import com.socialinspectors.deployment.constants.SystemNames;
 import com.socialinspectors.retriever.settings.locations.FetchingLocationsHolder;
 import com.socialinspectors.retriever.twitter.StatusExample;
+import com.socialinspectors.utils.deployment.DeploymentContext;
+import com.socialinspectors.utils.deployment.constants.SystemNames;
 import com.typesafe.config.ConfigFactory;
 
 public class ExtractorTest {

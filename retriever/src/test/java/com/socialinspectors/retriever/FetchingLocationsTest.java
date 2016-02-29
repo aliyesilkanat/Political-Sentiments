@@ -7,7 +7,7 @@ import org.junit.Test;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.socialinspectors.retriever.settings.locations.FetchingLocations;
-import com.socialinspectors.utils.OntologyProperties;
+import com.socialinspectors.utils.prop.OntologyProperties;
 
 public class FetchingLocationsTest {
 	@Test

@@ -9,9 +9,9 @@ import com.google.gson.JsonObject;
 import com.socialinspectors.retriever.RetrieverSystem;
 import com.socialinspectors.retriever.settings.locations.FetchingLocations;
 import com.socialinspectors.retriever.settings.locations.FetchingLocationsHolder;
-import com.socialinspectors.utils.OntologyProperties;
 import com.socialinspectors.utils.messages.MessageCreator;
 import com.socialinspectors.utils.messages.actors.AnalyzerMessages;
+import com.socialinspectors.utils.prop.OntologyProperties;
 
 import akka.actor.ActorSelection;
 import akka.actor.UntypedActor;

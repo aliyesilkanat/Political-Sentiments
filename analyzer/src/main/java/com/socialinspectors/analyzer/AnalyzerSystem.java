@@ -7,9 +7,9 @@ import akka.actor.ActorSystem;
 import akka.actor.Props;
 
 import com.socialinspectors.analyzer.actor.GuardianAnalyzer;
-import com.socialinspectors.deployment.DeploymentContext;
-import com.socialinspectors.deployment.constants.GuardianActorNames;
-import com.socialinspectors.deployment.constants.SystemNames;
+import com.socialinspectors.utils.deployment.constants.GuardianActorNames;
+import com.socialinspectors.utils.deployment.DeploymentContext;
+import com.socialinspectors.utils.deployment.constants.SystemNames;
 import com.typesafe.config.ConfigFactory;
 
 public class AnalyzerSystem {
@@ -17,8 +17,7 @@ public class AnalyzerSystem {
 	/**
 	 * Logger instance
 	 */
-	private static final Logger logger = LogManager
-			.getLogger(AnalyzerSystem.class.getName());
+	private static final Logger logger = LogManager.getLogger(AnalyzerSystem.class.getName());
 
 	/**
 	 * {@link ActorSystem} instance for retriever system.
@@ -39,8 +38,7 @@ public class AnalyzerSystem {
 		try {
 			new AnalyzerSystem().execute();
 		} catch (Exception e) {
-			getLogger().fatal(
-					"system initalization error, shutting down system", e);
+			getLogger().fatal("system initalization error, shutting down system", e);
 		}
 
 	}
@@ -49,8 +47,7 @@ public class AnalyzerSystem {
 	 * Creates leader retriever actor.
 	 */
 	private void createLeaderActor() {
-		system.actorOf(Props.create(GuardianAnalyzer.class),
-				GuardianActorNames.ANALYZER_GUARDIAN);
+		system.actorOf(Props.create(GuardianAnalyzer.class), GuardianActorNames.ANALYZER_GUARDIAN);
 	}
 
 	private void execute() {
@@ -62,9 +59,8 @@ public class AnalyzerSystem {
 		if (getLogger().isTraceEnabled()) {
 			getLogger().trace("Starting analyzer system");
 		}
-		system = ActorSystem.create(SystemNames.ANALYZER, ConfigFactory
-				.load(ConfigFactory.parseString(deploymentContext
-						.getAkkaConfig())));
+		system = ActorSystem.create(SystemNames.ANALYZER,
+				ConfigFactory.load(ConfigFactory.parseString(deploymentContext.getAkkaConfig())));
 		if (getLogger().isInfoEnabled()) {
 			getLogger().info("Started analyzer system");
 		}

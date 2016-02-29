@@ -1,7 +1,7 @@
 package com.socialinspectors.storer.database.pattern.tweets;
 
 import com.google.gson.JsonObject;
-import com.socialinspectors.utils.OntologyProperties;
+import com.socialinspectors.utils.prop.OntologyProperties;
 
 public class Json2TweetsPatternConverter {
 

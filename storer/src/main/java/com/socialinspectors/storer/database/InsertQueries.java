@@ -5,7 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.bson.Document;
 
 import com.mongodb.client.MongoCollection;
-import com.socialinspectors.data.DatabaseConstants;
+import com.socialinspectors.utils.data.DatabaseConstants;
 
 public class InsertQueries {
 	private static final Logger logger = LogManager.getLogger(InsertQueries.class);

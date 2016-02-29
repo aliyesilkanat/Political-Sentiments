@@ -7,7 +7,7 @@ import org.apache.logging.log4j.Logger;
 import org.bson.Document;
 
 import com.google.gson.Gson;
-import com.socialinspectors.utils.OntologyProperties;
+import com.socialinspectors.utils.prop.OntologyProperties;
 
 public class FetchingPeopleHolder {
 

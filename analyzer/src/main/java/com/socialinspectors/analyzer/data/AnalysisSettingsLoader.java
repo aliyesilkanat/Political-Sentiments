@@ -4,7 +4,7 @@ import org.bson.Document;
 
 import com.mongodb.client.MongoDatabase;
 import com.socialinspectors.analyzer.settings.AnalysisSettingsHolder;
-import com.socialinspectors.data.DatabaseConstants;
+import com.socialinspectors.utils.data.DatabaseConstants;
 
 public class AnalysisSettingsLoader {
 

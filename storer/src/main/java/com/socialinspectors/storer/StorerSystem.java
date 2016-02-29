@@ -6,10 +6,10 @@ import org.apache.logging.log4j.Logger;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
 
-import com.socialinspectors.deployment.DeploymentContext;
-import com.socialinspectors.deployment.constants.GuardianActorNames;
-import com.socialinspectors.deployment.constants.SystemNames;
+import com.socialinspectors.utils.deployment.constants.GuardianActorNames;
 import com.socialinspectors.storer.actor.GuardianStorer;
+import com.socialinspectors.utils.deployment.DeploymentContext;
+import com.socialinspectors.utils.deployment.constants.SystemNames;
 import com.typesafe.config.ConfigFactory;
 
 /**
@@ -21,8 +21,7 @@ public class StorerSystem {
 	/**
 	 * Logger instance
 	 */
-	private static final Logger logger = LogManager
-			.getLogger(StorerSystem.class.getName());
+	private static final Logger logger = LogManager.getLogger(StorerSystem.class.getName());
 	public static DeploymentContext deploymentContext;
 
 	public static Logger getLogger() {
@@ -49,8 +48,7 @@ public class StorerSystem {
 	 * Creates leader retriever actor.
 	 */
 	private void createLeaderActor() {
-		system.actorOf(Props.create(GuardianStorer.class),
-				GuardianActorNames.STORER_GUARDIAN);
+		system.actorOf(Props.create(GuardianStorer.class), GuardianActorNames.STORER_GUARDIAN);
 	}
 
 	private void execute() {
@@ -62,8 +60,7 @@ public class StorerSystem {
 		if (getLogger().isTraceEnabled()) {
 			getLogger().trace("Starting storer system");
 		}
-		system = ActorSystem.create(SystemNames.STORER,
-				ConfigFactory.parseString(deploymentContext.getAkkaConfig()));
+		system = ActorSystem.create(SystemNames.STORER, ConfigFactory.parseString(deploymentContext.getAkkaConfig()));
 		if (getLogger().isInfoEnabled()) {
 			getLogger().info("Started storer system");
 		}

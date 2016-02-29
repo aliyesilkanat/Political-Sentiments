@@ -7,10 +7,10 @@ import akka.actor.ActorRef;
 import akka.actor.Props;
 
 import com.google.gson.JsonObject;
-import com.socialinspectors.actor.Actor;
 import com.socialinspectors.storer.StorerSystem;
 import com.socialinspectors.storer.actor.dispatcher.GuardianStorerDispatcher;
 import com.socialinspectors.storer.database.pattern.tweets.Json2TweetsPatternConverter;
+import com.socialinspectors.utils.actor.Actor;
 import com.socialinspectors.utils.messages.MessageParser;
 
 /**

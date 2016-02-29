@@ -9,7 +9,7 @@ import org.junit.Test;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import com.socialinspectors.data.DatabaseConstants;
+import com.socialinspectors.utils.data.DatabaseConstants;
 
 public class AnalysisSettingsLoaderTest {
 	private MongoDatabase mongoDatabase;

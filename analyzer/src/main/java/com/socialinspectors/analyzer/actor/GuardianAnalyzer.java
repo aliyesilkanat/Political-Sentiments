@@ -8,15 +8,15 @@ import org.apache.logging.log4j.Logger;
 import akka.actor.ActorSelection;
 
 import com.google.gson.JsonObject;
-import com.socialinspectors.actor.Actor;
 import com.socialinspectors.analyzer.AnalyzerSystem;
 import com.socialinspectors.analyzer.actor.dispatcher.GuardianAnalyzerDispatcher;
 import com.socialinspectors.analyzer.settings.AnalysisSettings;
 import com.socialinspectors.analyzer.technique.TechniqueContext;
 import com.socialinspectors.analyzer.technique.UnexpectedTagIdException;
-import com.socialinspectors.utils.OntologyProperties;
+import com.socialinspectors.utils.actor.Actor;
 import com.socialinspectors.utils.messages.MessageCreator;
 import com.socialinspectors.utils.messages.actors.AnalyzerMessages;
+import com.socialinspectors.utils.prop.OntologyProperties;
 
 /**
  * @author Ali Yesilkanat

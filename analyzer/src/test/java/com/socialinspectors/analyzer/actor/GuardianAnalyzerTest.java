@@ -10,9 +10,9 @@ import akka.testkit.TestActorRef;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.socialinspectors.deployment.DeploymentContext;
-import com.socialinspectors.deployment.constants.SystemNames;
-import com.socialinspectors.utils.OntologyProperties;
+import com.socialinspectors.utils.deployment.DeploymentContext;
+import com.socialinspectors.utils.deployment.constants.SystemNames;
+import com.socialinspectors.utils.prop.OntologyProperties;
 import com.typesafe.config.ConfigFactory;
 
 public class GuardianAnalyzerTest {

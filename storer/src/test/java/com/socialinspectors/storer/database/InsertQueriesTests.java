@@ -4,9 +4,9 @@ import org.bson.Document;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import com.socialinspectors.data.DatabaseConstants;
 import com.socialinspectors.storer.database.pattern.tag.TagsPattern;
 import com.socialinspectors.storer.database.pattern.tweets.NonTaggedTweetsPattern;
+import com.socialinspectors.utils.data.DatabaseConstants;
 
 public class InsertQueriesTests {
 

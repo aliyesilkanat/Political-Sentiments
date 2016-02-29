@@ -10,8 +10,8 @@ import org.bson.Document;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
-import com.socialinspectors.data.DatabaseConstants;
 import com.socialinspectors.retriever.settings.users.FetchingPeopleHolder;
+import com.socialinspectors.utils.data.DatabaseConstants;
 
 public class FetchingPeopleLoader {
 

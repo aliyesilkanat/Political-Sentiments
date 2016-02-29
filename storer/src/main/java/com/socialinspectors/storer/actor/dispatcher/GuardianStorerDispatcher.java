@@ -1,8 +1,8 @@
 package com.socialinspectors.storer.actor.dispatcher;
 
-import com.socialinspectors.actor.Actor;
-import com.socialinspectors.actor.MessageDispatcher;
 import com.socialinspectors.storer.actor.GuardianStorer;
+import com.socialinspectors.utils.actor.Actor;
+import com.socialinspectors.utils.actor.MessageDispatcher;
 import com.socialinspectors.utils.messages.MessageParser;
 import com.socialinspectors.utils.messages.actors.AnalyzerMessages;
 

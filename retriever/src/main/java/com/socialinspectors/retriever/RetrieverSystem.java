@@ -3,13 +3,13 @@ package com.socialinspectors.retriever;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.socialinspectors.deployment.DeploymentContext;
-import com.socialinspectors.deployment.constants.GuardianActorNames;
-import com.socialinspectors.deployment.constants.SystemNames;
-import com.socialinspectors.deployment.paths.GuardianPaths;
+import com.socialinspectors.utils.deployment.constants.GuardianActorNames;
 import com.socialinspectors.retriever.actor.GuardianRetriever;
 import com.socialinspectors.retriever.settings.locations.FetchingLocations;
 import com.socialinspectors.retriever.settings.users.FetchingPeople;
+import com.socialinspectors.utils.deployment.DeploymentContext;
+import com.socialinspectors.utils.deployment.constants.SystemNames;
+import com.socialinspectors.utils.deployment.paths.GuardianPaths;
 import com.socialinspectors.utils.messages.MessageCreator;
 import com.socialinspectors.utils.messages.actors.RetrieverMessages;
 import com.typesafe.config.ConfigFactory;

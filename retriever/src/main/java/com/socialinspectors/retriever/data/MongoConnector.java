@@ -2,23 +2,22 @@ package com.socialinspectors.retriever.data;
 
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
-import com.socialinspectors.data.DatabaseConstants;
+import com.socialinspectors.retriever.RetrieverSystem;
+import com.socialinspectors.utils.data.localisation.DatabaseLocalisationContext;
 
 public class MongoConnector {
-	private static MongoClient client = null;
-	
+	private static MongoDatabase database = null;
 
 	/**
 	 * {@link MongoClient} client is a connection pool, not a single connection.
 	 * So it's active always.
 	 * 
-	 * @return {@link MongoDatabase} database for "social_inspectors"
+	 * @return {@link MongoDatabase} database for "politicalsentiments"
 	 */
 	public static MongoDatabase getDatabase() {
-		if (client == null) {
-			client = new MongoClient(DatabaseConstants.MONGODB_IP, DatabaseConstants.MONGODB_PORT);
-
+		if (database == null) {
+			database = new DatabaseLocalisationContext().createClient(RetrieverSystem.deploymentContext);
 		}
-		return client.getDatabase(DatabaseConstants.DATABASE);
+		return database;
 	}
 }

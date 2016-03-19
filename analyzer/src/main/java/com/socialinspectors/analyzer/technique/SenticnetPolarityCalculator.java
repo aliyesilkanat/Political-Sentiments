@@ -10,9 +10,14 @@ import com.socialinspectors.analyzer.SenticnetClient;
 
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.ling.IndexedWord;
+import edu.stanford.nlp.ling.CoreAnnotations.LemmaAnnotation;
+import edu.stanford.nlp.ling.CoreAnnotations.SentencesAnnotation;
+import edu.stanford.nlp.ling.CoreAnnotations.TokensAnnotation;
+import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.semgraph.SemanticGraph;
 import edu.stanford.nlp.semgraph.SemanticGraphCoreAnnotations.CollapsedDependenciesAnnotation;
 import edu.stanford.nlp.semgraph.SemanticGraphEdge;
+import edu.stanford.nlp.simple.Sentence;
 import edu.stanford.nlp.util.CoreMap;
 
 public class SenticnetPolarityCalculator implements TechniqueStrategy {
@@ -54,8 +59,8 @@ public class SenticnetPolarityCalculator implements TechniqueStrategy {
 		for (CoreMap sentence : sentences) {
 			// traverse sentences
 			SemanticGraph semanticGraph = sentence.get(CollapsedDependenciesAnnotation.class);
-			List<IndexedWord> adjectiveList = semanticGraph.getAllNodesByPartOfSpeechPattern("JJ");
 			// get adjectives list
+			List<IndexedWord> adjectiveList = semanticGraph.getAllNodesByPartOfSpeechPattern("JJ");
 			ConcurrentLinkedQueue<Double> adjectivesPolarity = new ConcurrentLinkedQueue<Double>();
 			traversAdjectives(semanticGraph, adjectiveList, adjectivesPolarity);
 			sentencesPolarity.add(adjectivesPolarity.stream().mapToDouble(val -> val).average().getAsDouble());
@@ -68,13 +73,13 @@ public class SenticnetPolarityCalculator implements TechniqueStrategy {
 			ConcurrentLinkedQueue<Double> adjectivesPolarity) throws Exception {
 		double polarity = 0;
 		for (IndexedWord adjective : adjectiveList) {
-
+			String lemma = getLemmaFromWord(adjective.originalText());
 			if (getLogger().isDebugEnabled()) {
-				getLogger().debug("found adjective: {}", adjective.originalText());
+				getLogger().debug("found adjective: {}, lemma: {}", adjective.originalText(), lemma);
 			}
 			// traverse adjectives
 			polarity = 0;
-			polarity = new SenticnetClient().getConceptPolarity(adjective.originalText());
+			polarity = new SenticnetClient().getConceptPolarity(lemma);
 			List<SemanticGraphEdge> posList = semanticGraph.getOutEdgesSorted(adjective);
 			polarity = traverseDependentEdges(polarity, posList, adjective);
 			adjectivesPolarity.add(polarity);
@@ -86,6 +91,21 @@ public class SenticnetPolarityCalculator implements TechniqueStrategy {
 			// 0.
 			adjectivesPolarity.add(polarity);
 		}
+	}
+
+	/**
+	 * Gets lemma from given word
+	 * 
+	 * @param adjective
+	 *            word
+	 * @return first lemma of the word
+	 */
+	private String getLemmaFromWord(String adjective) {
+		Annotation annotation = new Annotation(adjective);
+		CoreNlpPipeline.getPipeline().annotate(annotation);
+		String lemma = annotation.get(SentencesAnnotation.class).get(0).get(TokensAnnotation.class).get(0)
+				.get(LemmaAnnotation.class);
+		return lemma;
 	}
 
 	private double traverseDependentEdges(double polarity, List<SemanticGraphEdge> posList, IndexedWord adjective) {

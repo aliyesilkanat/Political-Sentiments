@@ -6,18 +6,17 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.socialinspectors.analyzer.SenticnetClient;
+import com.socialinspectors.analyzer.SenticNetModel;
 
 import edu.stanford.nlp.ling.CoreAnnotations;
-import edu.stanford.nlp.ling.IndexedWord;
 import edu.stanford.nlp.ling.CoreAnnotations.LemmaAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations.SentencesAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations.TokensAnnotation;
+import edu.stanford.nlp.ling.IndexedWord;
 import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.semgraph.SemanticGraph;
 import edu.stanford.nlp.semgraph.SemanticGraphCoreAnnotations.CollapsedDependenciesAnnotation;
 import edu.stanford.nlp.semgraph.SemanticGraphEdge;
-import edu.stanford.nlp.simple.Sentence;
 import edu.stanford.nlp.util.CoreMap;
 
 public class SenticnetPolarityCalculator implements TechniqueStrategy {
@@ -42,7 +41,7 @@ public class SenticnetPolarityCalculator implements TechniqueStrategy {
 		return (int) Math.round(mainSentiment);
 	}
 
-	double getSentiment(String tweet) throws Exception {
+	public double getSentiment(String tweet) throws Exception {
 
 		List<CoreMap> sentences = CoreNlpPipeline.getPipeline().process(tweet)
 				.get(CoreAnnotations.SentencesAnnotation.class);
@@ -53,7 +52,7 @@ public class SenticnetPolarityCalculator implements TechniqueStrategy {
 		return score;
 	}
 
-	private double traverseSentences(List<CoreMap> sentences, ConcurrentLinkedQueue<Double> sentencesPolarity)
+	public double traverseSentences(List<CoreMap> sentences, ConcurrentLinkedQueue<Double> sentencesPolarity)
 			throws Exception {
 		// extract sentences
 		for (CoreMap sentence : sentences) {
@@ -79,7 +78,8 @@ public class SenticnetPolarityCalculator implements TechniqueStrategy {
 			}
 			// traverse adjectives
 			polarity = 0;
-			polarity = new SenticnetClient().getConceptPolarity(lemma);
+			// polarity = new SenticnetClient().getConceptPolarity(lemma);
+			polarity = SenticNetModel.getInstance().getPolarity(lemma);
 			List<SemanticGraphEdge> posList = semanticGraph.getOutEdgesSorted(adjective);
 			polarity = traverseDependentEdges(polarity, posList, adjective);
 			adjectivesPolarity.add(polarity);

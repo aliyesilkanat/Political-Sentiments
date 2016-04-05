@@ -33,14 +33,6 @@ public class GuardianRetriever extends Actor {
 		for (int i = 0; i < FetchingLocations.getSettings().size(); i++) {
 			createFetchingActors(i);
 		}
-		// getLogger().info("creating twitter stream");
-		// setTwitterStream(new
-		// TwitterStreamBuilder().build(FetchingSettings.getSettings().getLatitude(),
-		// FetchingSettings.getSettings().getLongitude(), new
-		// TwitterStreamListener()));
-		// if (getLogger().isDebugEnabled()) {
-		// getLogger().debug("created twitter stream");
-		// }
 	}
 
 	/**

@@ -5,7 +5,8 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified! Configure in package.json\" && exit 1",
-    "postinstall": "bower install"
+    "postinstall": "bower install",
+    "start": "node main.js"
   },
   "repository": "",
   "keywords": [

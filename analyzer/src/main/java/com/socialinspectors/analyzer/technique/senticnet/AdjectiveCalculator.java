@@ -1,4 +1,4 @@
-package com.socialinspectors.analyzer.technique;
+package com.socialinspectors.analyzer.technique.senticnet;
 
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.socialinspectors.analyzer.SenticNetModel;
+import com.socialinspectors.analyzer.technique.CoreNlpPipeline;
 
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.ling.CoreAnnotations.LemmaAnnotation;
@@ -19,27 +20,8 @@ import edu.stanford.nlp.semgraph.SemanticGraphCoreAnnotations.CollapsedDependenc
 import edu.stanford.nlp.semgraph.SemanticGraphEdge;
 import edu.stanford.nlp.util.CoreMap;
 
-public class SenticnetPolarityCalculator implements TechniqueStrategy {
-	private static final Logger logger = LogManager.getLogger(SenticnetPolarityCalculator.class);
-
-	@Override
-	public int analyze(String tweet) {
-		if (getLogger().isDebugEnabled()) {
-			getLogger().debug("analyzing tweet: {}", tweet);
-		}
-		double mainSentiment;
-		try {
-			mainSentiment = getSentiment(tweet);
-		} catch (Exception e) {
-			mainSentiment = -1;
-			getLogger().fatal("could not got sentiment", e);
-		}
-		if (getLogger().isTraceEnabled()) {
-			getLogger().trace("analyzed tweet. result: {}, tweet: {}", mainSentiment, tweet);
-		}
-		// TODO float or integer? Respecting to TechniqueStrategy Interface
-		return (int) Math.round(mainSentiment);
-	}
+public class AdjectiveCalculator extends SenticNetCalculator {
+	private static final Logger logger = LogManager.getLogger(AdjectiveCalculator.class);
 
 	public double getSentiment(String tweet) throws Exception {
 
@@ -68,7 +50,7 @@ public class SenticnetPolarityCalculator implements TechniqueStrategy {
 		return sentencesPolarity.stream().mapToDouble(val -> val).average().getAsDouble();
 	}
 
-	private void traversAdjectives(SemanticGraph semanticGraph, List<IndexedWord> adjectiveList,
+	public void traversAdjectives(SemanticGraph semanticGraph, List<IndexedWord> adjectiveList,
 			ConcurrentLinkedQueue<Double> adjectivesPolarity) throws Exception {
 		double polarity = 0;
 		for (IndexedWord adjective : adjectiveList) {
@@ -78,7 +60,6 @@ public class SenticnetPolarityCalculator implements TechniqueStrategy {
 			}
 			// traverse adjectives
 			polarity = 0;
-			// polarity = new SenticnetClient().getConceptPolarity(lemma);
 			polarity = SenticNetModel.getInstance().getPolarity(lemma);
 			List<SemanticGraphEdge> posList = semanticGraph.getOutEdgesSorted(adjective);
 			polarity = traverseDependentEdges(polarity, posList, adjective);

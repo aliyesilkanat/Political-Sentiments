@@ -1,15 +1,17 @@
-package com.socialinspectors.analyzer.technique;
+package com.socialinspectors.analyzer.technique.senticnet;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class SenticnetPolarityCalculatorTest {
+import com.socialinspectors.analyzer.technique.senticnet.AdjectiveCalculator;
+
+public class AdjectiveCalculatorTest {
 	private static final double DELTA = 0.00001;
 
 	@Test
 	public void testGetSentiment() throws Exception {
-		SenticnetPolarityCalculator calculator = new SenticnetPolarityCalculator();
+		AdjectiveCalculator calculator = new AdjectiveCalculator();
 		assertEquals(-0.298, calculator.getSentiment("I am not happy at the moment."), DELTA);
 		assertEquals(0.085, calculator.getSentiment("The cost of the car was way too high."), DELTA);
 		assertEquals(0.097, calculator.getSentiment("I sometimes pity people living in large cities."), DELTA);

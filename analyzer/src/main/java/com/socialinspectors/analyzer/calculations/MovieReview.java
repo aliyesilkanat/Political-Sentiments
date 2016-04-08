@@ -1,4 +1,4 @@
-package com.socialinspectors.analyzer;
+package com.socialinspectors.analyzer.calculations;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -13,13 +13,13 @@ import java.util.concurrent.Executors;
 import org.apache.commons.io.FileUtils;
 
 import com.socialinspectors.analyzer.technique.CoreNlpPipeline;
-import com.socialinspectors.analyzer.technique.SenticnetPolarityCalculator;
+import com.socialinspectors.analyzer.technique.senticnet.AdjectiveCalculator;
 
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.util.CoreMap;
 
 public class MovieReview {
-	final SenticnetPolarityCalculator calculator = new SenticnetPolarityCalculator();
+	final AdjectiveCalculator calculator = new AdjectiveCalculator();
 	private static final String DELIMATER = "///////";
 	ExecutorService pool = Executors.newFixedThreadPool(10);
 
@@ -53,7 +53,7 @@ public class MovieReview {
 		}
 	}
 
-	private void extractSentiment(final SenticnetPolarityCalculator calculator, final BufferedWriter writer,
+	private void extractSentiment(final AdjectiveCalculator calculator, final BufferedWriter writer,
 			URL resource, final String datasetSentiment) throws IOException {
 		File[] files = new File(resource.getPath()).listFiles();
 		for (final File file : files) {
@@ -70,8 +70,8 @@ public class MovieReview {
 					List<CoreMap> sentences = CoreNlpPipeline.getPipeline().process(comment)
 							.get(CoreAnnotations.SentencesAnnotation.class);
 					double score1 = calculator.traverseSentences(sentences, new ConcurrentLinkedQueue<Double>());
-					if (SenticnetPolarityCalculator.getLogger().isInfoEnabled()) {
-						SenticnetPolarityCalculator.getLogger().info("calculated score: {}, tweet: {}", score1, comment);
+					if (AdjectiveCalculator.getLogger().isInfoEnabled()) {
+						AdjectiveCalculator.getLogger().info("calculated score: {}, tweet: {}", score1, comment);
 					}
 					score = score1;
 				} catch (Exception e) {

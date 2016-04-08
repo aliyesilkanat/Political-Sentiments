@@ -14,7 +14,7 @@ import org.apache.logging.log4j.Logger;
 public class SenticNetModel {
 	private final static Logger logger = LogManager.getLogger(SenticNetModel.class);
 
-	private static SenticNetModel instance = null;
+	private static SenticNetModel instance = new SenticNetModel();
 	private ConcurrentHashMap<String, Double> polarityMap = null;
 
 	private SenticNetModel() {
@@ -45,9 +45,6 @@ public class SenticNetModel {
 	}
 
 	public static SenticNetModel getInstance() {
-		if (instance == null) {
-			instance = new SenticNetModel();
-		}
 		return instance;
 
 	}

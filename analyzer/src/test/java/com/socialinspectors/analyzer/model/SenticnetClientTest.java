@@ -1,8 +1,10 @@
-package com.socialinspectors.analyzer;
+package com.socialinspectors.analyzer.model;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import com.socialinspectors.analyzer.model.SenticnetClient;
 
 public class SenticnetClientTest {
 	private static final double HAPPY_POLARITY = 0.298;

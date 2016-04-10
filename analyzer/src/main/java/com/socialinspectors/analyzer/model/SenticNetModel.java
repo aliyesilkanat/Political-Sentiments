@@ -1,4 +1,4 @@
-package com.socialinspectors.analyzer;
+package com.socialinspectors.analyzer.model;
 
 import java.util.concurrent.ConcurrentHashMap;
 

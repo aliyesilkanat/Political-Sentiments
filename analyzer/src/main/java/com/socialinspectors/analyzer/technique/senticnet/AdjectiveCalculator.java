@@ -6,7 +6,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.socialinspectors.analyzer.SenticNetModel;
+import com.socialinspectors.analyzer.model.SenticNetModel;
 import com.socialinspectors.analyzer.technique.CoreNlpPipeline;
 
 import edu.stanford.nlp.ling.CoreAnnotations;

@@ -1,0 +1,26 @@
+{
+  "name": "presenter",
+  "version": "0.1.0",
+  "description": "presenter",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified! Configure in package.json\" && exit 1",
+    "postinstall": "bower install",
+    "start": "node main.js"
+  },
+  "repository": "",
+  "keywords": [
+    "node.js",
+    "eclipse",
+    "nodeclipse"
+  ],
+  "author": "",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "dependencies": {
+    "async": "^1.5.2",
+    "express": "^4.13.4",
+    "mongodb": "^2.0.55",
+    "serve-static": "~1.7.0"
+  }
+}

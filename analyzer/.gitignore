@@ -1,1 +1,12 @@
 /target/
+/movie_results_after_dl.csv
+/movie_results_by_sentences_after_dl.csv
+/movie_results_by_sentences.csv
+/movie_results_pos.csv
+/movie_results_total.csv
+/movie_results1.csv
+/raw_sentences.txt
+/trainedMongoTweetsModel.txt
+/trainedVectors.txt
+/tweet_results_total_after_word2vec.csv
+/tweet_results_total.csv

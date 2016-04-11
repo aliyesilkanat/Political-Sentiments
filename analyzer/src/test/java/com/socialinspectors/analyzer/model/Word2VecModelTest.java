@@ -12,7 +12,7 @@ public class Word2VecModelTest {
 		Collection<String> findNearest = Word2VecModel.getInstance().findNearest("fast");
 		System.out.println(findNearest.size());
 		String[] array = findNearest.toArray(new String[findNearest.size()]);
-		assertEquals("quick", array[0]);
+		assertEquals("cute", array[0]);
 
 	}
 }

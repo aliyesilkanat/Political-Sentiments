@@ -1,5 +1,6 @@
 package com.socialinspectors.analyzer.model;
 
+import java.util.Locale;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.jena.query.QueryExecutionFactory;
@@ -50,12 +51,13 @@ public class SenticNetModel {
 	}
 
 	public double getPolarity(String word) {
+		String lowercaseWord = word.toLowerCase(Locale.ENGLISH);
 		double polarity = 0;
-		if (polarityMap.containsKey(word)) {
-			polarity = polarityMap.get(word);
-			getLogger().debug("found concept in senticnet, word: {}, polarity {}", word, polarity);
+		if (polarityMap.containsKey(lowercaseWord)) {
+			polarity = polarityMap.get(lowercaseWord);
+			getLogger().debug("found concept in senticnet, word: {}, polarity {}", lowercaseWord, polarity);
 		} else {
-			getLogger().debug("cannot find given word in sentic.net model, word: {}", word);
+			getLogger().debug("cannot find given word in sentic.net model, word: {}", lowercaseWord);
 		}
 		return polarity;
 	}

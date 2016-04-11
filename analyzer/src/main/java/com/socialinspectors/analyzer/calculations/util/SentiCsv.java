@@ -11,7 +11,7 @@ public class SentiCsv {
 	public static void main(String[] args) {
 
 		try {
-			new SentiCsv().run("tweet_results_total.csv");
+			new SentiCsv().run("tweet_results_total_after_word2vec.csv");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

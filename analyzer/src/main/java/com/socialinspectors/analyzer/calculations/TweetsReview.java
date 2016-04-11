@@ -28,14 +28,7 @@ public class TweetsReview {
 	private void run() throws Exception {
 		BufferedReader br = new BufferedReader(
 				new InputStreamReader(getClass().getClassLoader().getResourceAsStream("tweets.txt")));
-		writer = new BufferedWriter(new FileWriter("tweet_results_total.csv"));
-		writer.append("Comments");
-		writer.append(DELIMATER);
-		writer.append("Score");
-		writer.append(DELIMATER);
-		writer.append("Dataset sentiment");
-		writer.append(DELIMATER + "\n");
-		writer.flush();
+		writer = new BufferedWriter(new FileWriter("tweet_results_total_after_word2vec.csv"));
 		String strLine;
 		DependencyCalculator calculator = new DependencyCalculator();
 		while ((strLine = br.readLine()) != null) {

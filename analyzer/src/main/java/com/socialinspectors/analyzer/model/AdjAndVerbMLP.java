@@ -45,7 +45,7 @@ public class AdjAndVerbMLP {
 		}
 	}
 
-	private void train() throws IOException, InterruptedException {
+	MultiLayerNetwork train() throws IOException, InterruptedException {
 		// Load the training data:
 		RecordReader rr = new CSVRecordReader();
 		rr.initialize(new FileSplit(new File("src/main/resources/mlp/training_data_2.csv")));
@@ -72,42 +72,43 @@ public class AdjAndVerbMLP {
 		for (int n = 0; n < nEpochs; n++) {
 			model.fit(trainIter);
 		}
-		double[] evalPoints = new double[2];
-		evalPoints[0] = 0.26249998807907104;
-		evalPoints[1] = 0.04500000178813934;
-		INDArray create = Nd4j.create(evalPoints);
-		INDArray output = model.output(create, false);
-		int[] predict = model.predict(create);
-		System.out.println(output.getDouble(0) + " " + output.getDouble(1));
-		System.out.println(predict[0] + " " + predict[1]);
-
-		evalPoints[0] = 0.8830000162124634;
-		evalPoints[1] = -0.23499999940395355;
-		create = Nd4j.create(evalPoints);
-		output = model.output(create, false);
-		predict = model.predict(create);
-		System.out.println(output.getDouble(0) + " " + output.getDouble(1));
-		System.out.println(predict[0] + " " + predict[1]);
-
-		evalPoints[0] = 0;
-		evalPoints[1] = 0.667;
-		create = Nd4j.create(evalPoints);
-		output = model.output(create, false);
-		predict = model.predict(create);
-		System.out.println(output.getDouble(0) + " " + output.getDouble(1));
-		System.out.println(predict[0] + " " + predict[1]);
-		System.out.println("Evaluate model....");
-		Evaluation eval = new Evaluation(numOutputs);
-		while (testIter.hasNext()) {
-			DataSet t = testIter.next();
-			INDArray features = t.getFeatureMatrix();
-			INDArray lables = t.getLabels();
-			INDArray predicted = model.output(features, false);
-
-			eval.eval(lables, predicted);
-
-		}
-
-		System.out.println(eval.stats());
+		return model;
+		// double[] evalPoints = new double[2];
+		// evalPoints[0] = 0.26249998807907104;
+		// evalPoints[1] = 0.04500000178813934;
+		// INDArray create = Nd4j.create(evalPoints);
+		// INDArray output = model.output(create, false);
+		// int[] predict = model.predict(create);
+		// System.out.println(output.getDouble(0) + " " + output.getDouble(1));
+		// System.out.println(predict[0] + " " + predict[1]);
+		//
+		// evalPoints[0] = 0.8830000162124634;
+		// evalPoints[1] = -0.23499999940395355;
+		// create = Nd4j.create(evalPoints);
+		// output = model.output(create, false);
+		// predict = model.predict(create);
+		// System.out.println(output.getDouble(0) + " " + output.getDouble(1));
+		// System.out.println(predict[0] + " " + predict[1]);
+		//
+		// evalPoints[0] = 0;
+		// evalPoints[1] = 0.667;
+		// create = Nd4j.create(evalPoints);
+		// output = model.output(create, false);
+		// predict = model.predict(create);
+		// System.out.println(output.getDouble(0) + " " + output.getDouble(1));
+		// System.out.println(predict[0] + " " + predict[1]);
+		// System.out.println("Evaluate model....");
+		// Evaluation eval = new Evaluation(numOutputs);
+		// while (testIter.hasNext()) {
+		// DataSet t = testIter.next();
+		// INDArray features = t.getFeatureMatrix();
+		// INDArray lables = t.getLabels();
+		// INDArray predicted = model.output(features, false);
+		//
+		// eval.eval(lables, predicted);
+		//
+		// }
+		//
+		// System.out.println(eval.stats());
 	}
 }

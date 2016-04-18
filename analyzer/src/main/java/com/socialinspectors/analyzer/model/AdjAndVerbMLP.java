@@ -3,7 +3,6 @@ package com.socialinspectors.analyzer.model;
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.jena.sparql.function.library.eval;
 import org.canova.api.records.reader.RecordReader;
 import org.canova.api.records.reader.impl.CSVRecordReader;
 import org.canova.api.split.FileSplit;
@@ -24,13 +23,11 @@ import org.nd4j.linalg.dataset.DataSet;
 import org.nd4j.linalg.factory.Nd4j;
 import org.nd4j.linalg.lossfunctions.LossFunctions.LossFunction;
 
-import edu.stanford.nlp.io.EncodingPrintWriter.out;
-
 public class AdjAndVerbMLP {
 	int seed = 123;
 	double learningRate = 0.005;
 	int batchSize = 50;
-	int nEpochs = 200;
+	int nEpochs = 100;
 
 	int numInputs = 2;
 	int numOutputs = 2;
@@ -51,11 +48,11 @@ public class AdjAndVerbMLP {
 	private void train() throws IOException, InterruptedException {
 		// Load the training data:
 		RecordReader rr = new CSVRecordReader();
-		rr.initialize(new FileSplit(new File("src/main/resources/mlp/training_data.csv")));
+		rr.initialize(new FileSplit(new File("src/main/resources/mlp/training_data_2.csv")));
 		DataSetIterator trainIter = new RecordReaderDataSetIterator(rr, batchSize, 0, 2);
 		// Load the test/evaluation data:
 		RecordReader rrTest = new CSVRecordReader();
-		rrTest.initialize(new FileSplit(new File("src/main/resources/mlp/eval_data.csv")));
+		rrTest.initialize(new FileSplit(new File("src/main/resources/mlp/eval_data_2.csv")));
 		DataSetIterator testIter = new RecordReaderDataSetIterator(rrTest, batchSize, 0, 2);
 		MultiLayerConfiguration conf = new NeuralNetConfiguration.Builder().seed(seed).iterations(1)
 				.optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT).learningRate(learningRate)
@@ -75,14 +72,30 @@ public class AdjAndVerbMLP {
 		for (int n = 0; n < nEpochs; n++) {
 			model.fit(trainIter);
 		}
-		double[][] evalPoints = new double[2][1];
-		evalPoints[0][0] = 0;
-		evalPoints[1][0] = 1;
+		double[] evalPoints = new double[2];
+		evalPoints[0] = 0.26249998807907104;
+		evalPoints[1] = 0.04500000178813934;
 		INDArray create = Nd4j.create(evalPoints);
-//		INDArray output = model.output(create);
-//		int[] predict = model.predict(create);
-//		System.out.println(output.getDouble(0) + " " + output.getDouble(1));
-//		System.out.println(predict[0] + " " + predict[1]);
+		INDArray output = model.output(create, false);
+		int[] predict = model.predict(create);
+		System.out.println(output.getDouble(0) + " " + output.getDouble(1));
+		System.out.println(predict[0] + " " + predict[1]);
+
+		evalPoints[0] = 0.8830000162124634;
+		evalPoints[1] = -0.23499999940395355;
+		create = Nd4j.create(evalPoints);
+		output = model.output(create, false);
+		predict = model.predict(create);
+		System.out.println(output.getDouble(0) + " " + output.getDouble(1));
+		System.out.println(predict[0] + " " + predict[1]);
+
+		evalPoints[0] = 0;
+		evalPoints[1] = 0.667;
+		create = Nd4j.create(evalPoints);
+		output = model.output(create, false);
+		predict = model.predict(create);
+		System.out.println(output.getDouble(0) + " " + output.getDouble(1));
+		System.out.println(predict[0] + " " + predict[1]);
 		System.out.println("Evaluate model....");
 		Evaluation eval = new Evaluation(numOutputs);
 		while (testIter.hasNext()) {

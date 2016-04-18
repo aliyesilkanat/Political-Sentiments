@@ -10,7 +10,7 @@ public class CoreNlpPipeline {
 
 	private CoreNlpPipeline() {
 		Properties properties = new Properties();
-		properties.setProperty("annotators", "tokenize, ssplit, parse, depparse,lemma");
+		properties.setProperty("annotators", "tokenize, ssplit, parse, depparse,lemma,truecase");
 		pipeline = new StanfordCoreNLP(properties);
 	}
 

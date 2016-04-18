@@ -1,4 +1,4 @@
-package com.socialinspectors.analyzer.model;
+package com.socialinspectors.analyzer.model.training;
 
 import org.canova.api.util.ClassPathResource;
 import org.deeplearning4j.models.embeddings.WeightLookupTable;

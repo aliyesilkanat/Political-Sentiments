@@ -1,4 +1,4 @@
-package com.socialinspectors.analyzer.model;
+package com.socialinspectors.analyzer.model.training;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -11,10 +11,11 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.apache.jena.sparql.pfunction.library.str;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.socialinspectors.analyzer.model.SenticNetModel;
+import com.socialinspectors.analyzer.model.Word2VecModel;
 import com.socialinspectors.analyzer.technique.CoreNlpPipeline;
 import com.socialinspectors.analyzer.technique.senticnet.AdjectiveAndVerbCalculator;
 import com.socialinspectors.analyzer.technique.senticnet.postag.Adjective;
@@ -30,14 +31,19 @@ import edu.stanford.nlp.trees.GrammaticalRelation;
 import edu.stanford.nlp.util.CoreMap;
 
 public class AdjectiveAndVerbModelTrainer {
-	private static final String[] VERBS = { "VB", "VBD", "VBG", "VBN", "VBP", "VBZ " };
-	private static final Logger logger = LogManager.getLogger(AdjectiveAndVerbCalculator.class);
-	private static final String ADJECTIVE = "JJ";
 	private static final String ADJECTIVAL_MODIFIER = "amod";
-	private static final String NEGATION_MODIFIER = "neg";
+	private static final String ADJECTIVE = "JJ";
 	private static final String COPULA = "cop";
 	private static final String DELIMATER = ",";
-	ExecutorService threadPool = Executors.newFixedThreadPool(30);
+	private static final Logger logger = LogManager.getLogger(AdjectiveAndVerbCalculator.class);
+	private static final String NEGATION_MODIFIER = "neg";
+	private static final String[] VERBS = { "VB", "VBD", "VBG", "VBN", "VBP", "VBZ " };
+	private ExecutorService threadPool = Executors.newFixedThreadPool(30);
+	private BufferedWriter writer;
+
+	public static Logger getLogger() {
+		return logger;
+	}
 
 	public static void main(String[] args) {
 		try {
@@ -47,28 +53,6 @@ public class AdjectiveAndVerbModelTrainer {
 			e.printStackTrace();
 		}
 
-	}
-
-	private BufferedWriter writer;
-
-	private void train() throws Exception {
-		BufferedReader br = new BufferedReader(
-				new InputStreamReader(getClass().getClassLoader().getResourceAsStream("labelled_sentences.txt")));
-		writer = new BufferedWriter(new FileWriter("labelled_sentences_adj_verb_training_data.csv"));
-		String strLine;
-		while ((strLine = br.readLine()) != null) {
-
-			if (strLine.endsWith("1") || strLine.endsWith("0")) {
-				String sentence = strLine.substring(0, strLine.length() - 2);
-//				System.out.println(sentence + " " + strLine.charAt(strLine.length() - 1));
-
-				List<CoreMap> sentences = CoreNlpPipeline.getPipeline().process(sentence)
-						.get(CoreAnnotations.SentencesAnnotation.class);
-				executeCalculation(strLine, sentence, sentences);
-			}
-		}
-		// writer.close();
-		br.close();
 	}
 
 	private void executeCalculation(final String strLine, final String sentence, final List<CoreMap> sentences)
@@ -84,57 +68,6 @@ public class AdjectiveAndVerbModelTrainer {
 				}
 			}
 		});
-	}
-
-	public void write(List<CoreMap> sentences, int polarity, String rawSentence) throws Exception {
-		// extract sentences
-		for (CoreMap sentence : sentences) {
-			// traverse sentences
-			SemanticGraph semanticGraph = sentence.get(CollapsedDependenciesAnnotation.class);
-
-			// traversing each adjective
-			double adjPolarity = getAdjPolarity(semanticGraph);
-			double verbPolarity = getVerbPolarity(semanticGraph);
-			if (verbPolarity != 0 || adjPolarity != 0) {
-				write(polarity, adjPolarity, verbPolarity);
-			}
-
-		}
-
-	}
-
-	public synchronized void write(int polarity, double adjPolarity, double verbPolarity) {
-		try {
-			writer.append(polarity + "");
-			writer.append(DELIMATER);
-			writer.append(Double.toString(adjPolarity));
-			writer.append(DELIMATER);
-			writer.append(Double.toString(verbPolarity));
-			writer.append("\n");
-			writer.flush();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	private double getVerbPolarity(SemanticGraph semanticGraph) {
-		double verbPolarity = 0;
-		for (String verb : VERBS) {
-			List<IndexedWord> verbsPos = semanticGraph.getAllNodesByPartOfSpeechPattern(verb);
-			if (verbsPos.size() > 0) {
-				String lemmadVerb = verbsPos.get(0).lemma();
-				verbPolarity = SenticNetModel.getInstance().getPolarity(lemmadVerb);
-				Collection<String> findNearest = Word2VecModel.getInstance().findNearest(lemmadVerb);
-				for (String nearestVerb : findNearest) {
-					verbPolarity = SenticNetModel.getInstance().getPolarity(nearestVerb);
-					if (verbPolarity != 0) {
-						break;
-					}
-				}
-				break;
-			}
-		}
-		return verbPolarity;
 	}
 
 	private double getAdjPolarity(SemanticGraph semanticGraph) {
@@ -221,7 +154,75 @@ public class AdjectiveAndVerbModelTrainer {
 		return adjectiveMean;
 	}
 
-	public static Logger getLogger() {
-		return logger;
+	private double getVerbPolarity(SemanticGraph semanticGraph) {
+		double verbPolarity = 0;
+		for (String verb : VERBS) {
+			List<IndexedWord> verbsPos = semanticGraph.getAllNodesByPartOfSpeechPattern(verb);
+			if (verbsPos.size() > 0) {
+				String lemmadVerb = verbsPos.get(0).lemma();
+				verbPolarity = SenticNetModel.getInstance().getPolarity(lemmadVerb);
+				Collection<String> findNearest = Word2VecModel.getInstance().findNearest(lemmadVerb);
+				for (String nearestVerb : findNearest) {
+					verbPolarity = SenticNetModel.getInstance().getPolarity(nearestVerb);
+					if (verbPolarity != 0) {
+						break;
+					}
+				}
+				break;
+			}
+		}
+		return verbPolarity;
+	}
+
+	private void train() throws Exception {
+		BufferedReader br = new BufferedReader(
+				new InputStreamReader(getClass().getClassLoader().getResourceAsStream("labelled_sentences.txt")));
+		writer = new BufferedWriter(new FileWriter("labelled_sentences_adj_verb_training_data.csv"));
+		String strLine;
+		while ((strLine = br.readLine()) != null) {
+
+			if (strLine.endsWith("1") || strLine.endsWith("0")) {
+				String sentence = strLine.substring(0, strLine.length() - 2);
+				// System.out.println(sentence + " " +
+				// strLine.charAt(strLine.length() - 1));
+
+				List<CoreMap> sentences = CoreNlpPipeline.getPipeline().process(sentence)
+						.get(CoreAnnotations.SentencesAnnotation.class);
+				executeCalculation(strLine, sentence, sentences);
+			}
+		}
+		// writer.close();
+		br.close();
+	}
+
+	public synchronized void write(int polarity, double adjPolarity, double verbPolarity) {
+		try {
+			writer.append(polarity + "");
+			writer.append(DELIMATER);
+			writer.append(Double.toString(adjPolarity));
+			writer.append(DELIMATER);
+			writer.append(Double.toString(verbPolarity));
+			writer.append("\n");
+			writer.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void write(List<CoreMap> sentences, int polarity, String rawSentence) throws Exception {
+		// extract sentences
+		for (CoreMap sentence : sentences) {
+			// traverse sentences
+			SemanticGraph semanticGraph = sentence.get(CollapsedDependenciesAnnotation.class);
+
+			// traversing each adjective
+			double adjPolarity = getAdjPolarity(semanticGraph);
+			double verbPolarity = getVerbPolarity(semanticGraph);
+			if (verbPolarity != 0 || adjPolarity != 0) {
+				write(polarity, adjPolarity, verbPolarity);
+			}
+
+		}
+
 	}
 }

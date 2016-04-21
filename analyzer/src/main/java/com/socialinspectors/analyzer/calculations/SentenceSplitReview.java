@@ -49,7 +49,7 @@ public class SentenceSplitReview {
 						String splittedSentence = split.split(sentences.get(0));
 						write(strLine, splittedSentence);
 					} catch (Exception e) {
-						write(strLine, "GOT EXCEPTION");
+						write(strLine, e.getMessage());
 						e.printStackTrace();
 					}
 				}
@@ -65,7 +65,6 @@ public class SentenceSplitReview {
 			writer.append(a);
 			writer.append(DELIMATER);
 			writer.append(b + "\n");
-			writer.append(DELIMATER + "\n");
 			writer.flush();
 		} catch (IOException e) {
 			e.printStackTrace();

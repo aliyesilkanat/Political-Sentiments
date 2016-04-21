@@ -20,7 +20,7 @@ public class SentenceSplitTest {
 				"The festival was to be held today; however, it was canceled due to the rainy weather.",
 				"However I do not know about it, it was easy." };
 		for (String sentence : sentences) {
-			List<CoreMap> coreSentences = CoreNlpPipeline.getPipeline().process("Sure, it is a fun phone, but try getting some signal!")
+			List<CoreMap> coreSentences = CoreNlpPipeline.getPipeline().process("Eh.... It works fine, but sometimes it just stops linking my calls, and I have to re sync it with my phone.")
 					.get(CoreAnnotations.SentencesAnnotation.class);
 			System.err.println(new SentenceSplitter().split(coreSentences.get(0)));
 		}

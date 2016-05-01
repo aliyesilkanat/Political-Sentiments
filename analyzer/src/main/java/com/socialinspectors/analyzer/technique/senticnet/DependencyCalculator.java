@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import com.socialinspectors.analyzer.technique.CoreNlpPipeline;
+import com.socialinspectors.analyzer.technique.pipeline.CoreNlpPipeline;
 import com.socialinspectors.analyzer.technique.senticnet.postag.Adjective;
 import com.socialinspectors.analyzer.technique.senticnet.postag.MeaningfulObject;
 import com.socialinspectors.analyzer.technique.senticnet.postag.TargetObject;

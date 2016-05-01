@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.socialinspectors.analyzer.technique.CoreNlpPipeline;
+import com.socialinspectors.analyzer.technique.pipeline.CoreNlpPipeline;
 
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.util.CoreMap;

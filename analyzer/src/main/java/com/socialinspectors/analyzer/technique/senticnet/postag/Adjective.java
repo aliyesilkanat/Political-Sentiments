@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.socialinspectors.analyzer.model.SenticNetModel;
 import com.socialinspectors.analyzer.model.Word2VecModel;
-import com.socialinspectors.analyzer.technique.CoreNlpPipeline;
+import com.socialinspectors.analyzer.technique.pipeline.CoreNlpPipeline;
 
 import edu.stanford.nlp.ling.IndexedWord;
 import edu.stanford.nlp.ling.CoreAnnotations.LemmaAnnotation;

@@ -7,7 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.socialinspectors.analyzer.model.SenticNetModel;
-import com.socialinspectors.analyzer.technique.CoreNlpPipeline;
+import com.socialinspectors.analyzer.technique.pipeline.CoreNlpPipeline;
 
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.ling.CoreAnnotations.LemmaAnnotation;

@@ -11,7 +11,7 @@ import java.util.concurrent.Executors;
 
 import org.apache.commons.io.FileUtils;
 
-import com.socialinspectors.analyzer.technique.CoreNlpPipeline;
+import com.socialinspectors.analyzer.technique.pipeline.CoreNlpPipeline;
 import com.socialinspectors.analyzer.technique.senticnet.DependencyCalculator;
 
 import edu.stanford.nlp.ling.CoreAnnotations;

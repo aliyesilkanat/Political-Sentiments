@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
-import com.socialinspectors.analyzer.technique.CoreNlpPipeline;
+import com.socialinspectors.analyzer.technique.pipeline.CoreNlpPipeline;
 import com.socialinspectors.analyzer.technique.senticnet.SentenceSplitter;
 
 import edu.stanford.nlp.ling.CoreAnnotations;

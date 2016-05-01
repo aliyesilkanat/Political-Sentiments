@@ -16,7 +16,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.socialinspectors.analyzer.model.SenticNetModel;
 import com.socialinspectors.analyzer.model.Word2VecModel;
-import com.socialinspectors.analyzer.technique.CoreNlpPipeline;
+import com.socialinspectors.analyzer.technique.pipeline.CoreNlpPipeline;
 import com.socialinspectors.analyzer.technique.senticnet.postag.Adjective;
 import com.socialinspectors.analyzer.technique.senticnet.postag.MeaningfulObject;
 import com.socialinspectors.analyzer.technique.senticnet.postag.TargetObject;

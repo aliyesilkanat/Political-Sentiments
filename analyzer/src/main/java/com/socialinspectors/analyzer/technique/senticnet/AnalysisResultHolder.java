@@ -1,5 +1,8 @@
 package com.socialinspectors.analyzer.technique.senticnet;
 
+import org.nd4j.linalg.api.ndarray.INDArray;
+import org.nd4j.linalg.factory.Nd4j;
+
 public class AnalysisResultHolder {
 	private double adjPolarity;
 	private double verbPolarity;
@@ -23,5 +26,10 @@ public class AnalysisResultHolder {
 
 	public void setVerbPolarity(double verbPolarity) {
 		this.verbPolarity = verbPolarity;
+	}
+
+	public INDArray getINDArray() {
+		return Nd4j.create(new double[] { adjPolarity, verbPolarity });
+
 	}
 }

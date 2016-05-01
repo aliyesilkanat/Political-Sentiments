@@ -1,4 +1,4 @@
-package com.socialinspectors.analyzer.technique;
+package com.socialinspectors.analyzer.technique.pipeline;
 
 import java.util.Properties;
 

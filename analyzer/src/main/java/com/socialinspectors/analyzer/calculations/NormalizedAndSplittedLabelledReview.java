@@ -19,7 +19,6 @@ public class NormalizedAndSplittedLabelledReview {
 		try {
 			new NormalizedAndSplittedLabelledReview().run();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -27,7 +26,7 @@ public class NormalizedAndSplittedLabelledReview {
 	private void run() throws Exception {
 		BufferedReader br = new BufferedReader(
 				new InputStreamReader(getClass().getClassLoader().getResourceAsStream("labelled_sentences.txt")));
-		writer = new BufferedWriter(new FileWriter("normalized_splitted_sentences_scores.txt"));
+		writer = new BufferedWriter(new FileWriter("normalized_splitted_sentences_scores.csv"));
 		String strLine;
 		while ((strLine = br.readLine()) != null) {
 
@@ -35,10 +34,16 @@ public class NormalizedAndSplittedLabelledReview {
 			String s = strLine.charAt(strLine.length() - 1) + "";
 			if (s.equals("1") || s.equals("0")) {
 
+				String substring = strLine.substring(0, strLine.length() - 1);
 				double extractSentiment = new SentenceAnalysisPipeline().extractSentiment(
-						CoreNlpPipeline.getPipeline().process(strLine.substring(0, strLine.length() - 1))
+						CoreNlpPipeline.getPipeline().process(substring)
 								.get(CoreAnnotations.SentencesAnnotation.class).get(0));
-				write(strLine, Double.toString(extractSentiment), s);
+				if (s.equals("1")) {
+					s = "Positive";
+				} else {
+					s = "Negative";
+				}
+				write(substring, Double.toString(extractSentiment), s);
 			}
 
 		}
@@ -50,7 +55,7 @@ public class NormalizedAndSplittedLabelledReview {
 		try {
 			writer.append(a + DELIMATER);
 			writer.append(object + DELIMATER);
-			writer.append(s + "\n");
+			writer.append(s + DELIMATER + "\n");
 			writer.flush();
 		} catch (IOException e) {
 			e.printStackTrace();

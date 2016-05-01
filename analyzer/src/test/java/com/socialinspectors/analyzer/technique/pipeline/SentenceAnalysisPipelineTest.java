@@ -12,7 +12,7 @@ public class SentenceAnalysisPipelineTest {
 	public void testPipeline() throws Exception {
 		CoreMap coreMap = CoreNlpPipeline.getPipeline().process("I love you.")
 				.get(CoreAnnotations.SentencesAnnotation.class).get(0);
-		new SentenceAnalysisPipeline().extractSentiment(coreMap);
+		assertEquals(0.01438, new SentenceAnalysisPipeline().extractSentiment(coreMap), 0.00001);
 
 	}
 }

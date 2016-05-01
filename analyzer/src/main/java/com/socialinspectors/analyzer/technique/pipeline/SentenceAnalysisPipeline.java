@@ -14,7 +14,7 @@ import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.util.CoreMap;
 
 public class SentenceAnalysisPipeline {
-	private static final Logger logger = LogManager.getLogger(AdjectiveAndVerbCalculator.class);
+	private static final Logger logger = LogManager.getLogger(SentenceAnalysisPipeline.class);
 
 	public double extractSentiment(CoreMap sentence) throws Exception {
 		String split = splitSentence(sentence);
@@ -26,8 +26,9 @@ public class SentenceAnalysisPipeline {
 		}
 		AnalysisResultHolder result = new AdjectiveAndVerbCalculator().getSentiment(splittedSent);
 		INDArray output = AdjAndVerbMLP.getModel().output(result.getINDArray());
-		double mlpScore = output.getDouble(1) - 0.5;
-		return new MLPOutputNormalizer().normalize(result, mlpScore); // TODO
+		double normalize = new MLPOutputNormalizer().normalize(result, output.getDouble(1) - 0.5);
+		getLogger().info("calculated sentence score: {}, sentence: {}", normalize, splittedSent.toString());
+		return normalize;
 
 	}
 

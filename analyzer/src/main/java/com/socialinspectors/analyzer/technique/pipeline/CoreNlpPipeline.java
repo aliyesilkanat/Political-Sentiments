@@ -8,13 +8,13 @@ public class CoreNlpPipeline {
 
 	private static StanfordCoreNLP pipeline = null;
 
-	private CoreNlpPipeline() {
+	private  CoreNlpPipeline() {
 		Properties properties = new Properties();
 		properties.setProperty("annotators", "tokenize, ssplit, parse, depparse,lemma,truecase");
 		pipeline = new StanfordCoreNLP(properties);
 	}
 
-	public static StanfordCoreNLP getPipeline() {
+	public  static StanfordCoreNLP getPipeline() {
 		if (pipeline == null) {
 			new CoreNlpPipeline();
 		}

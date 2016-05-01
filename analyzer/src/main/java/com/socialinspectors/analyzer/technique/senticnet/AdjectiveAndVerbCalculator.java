@@ -61,8 +61,8 @@ public class AdjectiveAndVerbCalculator {
 		double verbPolarity = getVerbPolarity(semanticGraph);
 		AnalysisResultHolder holder = new AnalysisResultHolder(adjPolarity, verbPolarity);
 		if (getLogger().isInfoEnabled()) {
-			getLogger().info("calculated adj score: {}, verb score: {}, tweet: {}", adjPolarity, verbPolarity,
-					semanticGraph.toFormattedString());
+			getLogger().info("calculated adj score: {}, verb score: {}, sentence: {}", adjPolarity, verbPolarity,
+					sentence.toString());
 		}
 		return holder;
 	}

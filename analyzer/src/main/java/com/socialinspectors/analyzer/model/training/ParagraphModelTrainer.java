@@ -32,16 +32,16 @@ public class ParagraphModelTrainer {
 
 	private void train() throws IOException {
 		final SentenceAnalysisPipeline analysisPipeline = new SentenceAnalysisPipeline();
-		BufferedWriter writer = new BufferedWriter(new FileWriter("paragraph_three_group_ann_input.csv"));
-		extractSentiment(writer, getClass().getClassLoader().getResource("movie_reviews/pos"), 1,analysisPipeline);
-		extractSentiment(writer, getClass().getClassLoader().getResource("movie_reviews/neg"), 0,analysisPipeline);
+		BufferedWriter writer = new BufferedWriter(new FileWriter("neg__paragraph_three_group_ann_input.csv"));
+		// extractSentiment(writer,
+		// getClass().getClassLoader().getResource("movie_reviews/pos"), 1,
+		// analysisPipeline);
+		extractSentiment(writer, getClass().getClassLoader().getResource("movie_reviews/neg"), 0, analysisPipeline);
 		writer.flush();
 	}
 
 	private void extractSentiment(final BufferedWriter writer, URL resource, final int datasetScore,
-			SentenceAnalysisPipeline analysisPipeline)
-			throws IOException {
-	
+			SentenceAnalysisPipeline analysisPipeline) throws IOException {
 
 		File[] files = new File(resource.getPath()).listFiles();
 		for (File file : files) {
@@ -54,37 +54,64 @@ public class ParagraphModelTrainer {
 					@Override
 					public void run() {
 						try {
-							
+
 							if (sentences.size() == 1) {
-								double extractSentiment = analysisPipeline.extractSentiment(sentences.get(0));
-								write(writer, datasetScore, 0, 0, extractSentiment);
+								double extractSentiment = getSentimentOfSentence(analysisPipeline, sentences);
+								write(writer, datasetScore, 0.0, 0.0, extractSentiment);
 							} else if (sentences.size() == 2) {
-								double score1 = analysisPipeline.extractSentiment(sentences.get(0));
-								double score2 = analysisPipeline.extractSentiment(sentences.get(2));
-								write(writer, datasetScore, 0, score1, score2);
-
+								double score1 = getSentimentOfSentence(analysisPipeline, sentences);
+								double score2 = getSentimentOfSentence(analysisPipeline, sentences);
+								write(writer, datasetScore, 0.0, score1, score2);
 							} else if (sentences.size() > 2) {
-
 								ConcurrentLinkedQueue<Double> firstGroup = new ConcurrentLinkedQueue<Double>();
 								ConcurrentLinkedQueue<Double> secondGroup = new ConcurrentLinkedQueue<Double>();
 								ConcurrentLinkedQueue<Double> thirdGroup = new ConcurrentLinkedQueue<Double>();
 								int division = (int) sentences.size() / 3;
 
 								for (int i = 0; i < division; i++) {
-									firstGroup.add(analysisPipeline.extractSentiment(sentences.get(i)));
+									addSentimentScoreToList(analysisPipeline, sentences, firstGroup, i);
 								}
 								for (int i = division; i < division * 2; i++) {
-									secondGroup.add(analysisPipeline.extractSentiment(sentences.get(i)));
+									addSentimentScoreToList(analysisPipeline, sentences, secondGroup, i);
 								}
 								for (int i = division * 2; i < sentences.size(); i++) {
-									thirdGroup.add(analysisPipeline.extractSentiment(sentences.get(i)));
+									addSentimentScoreToList(analysisPipeline, sentences, thirdGroup, i);
 								}
+								nullCheck(firstGroup);
+								nullCheck(secondGroup);
+								nullCheck(thirdGroup);
 								write(writer, datasetScore,
 										firstGroup.stream().mapToDouble(val -> val).average().getAsDouble(),
 										secondGroup.stream().mapToDouble(val -> val).average().getAsDouble(),
 										thirdGroup.stream().mapToDouble(val -> val).average().getAsDouble());
 							}
 
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+
+					private double getSentimentOfSentence(SentenceAnalysisPipeline analysisPipeline,
+							List<CoreMap> sentences) {
+						double score = 0.0;
+						try {
+							score = analysisPipeline.extractSentiment(sentences.get(0));
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+						return score;
+					}
+
+					private void nullCheck(ConcurrentLinkedQueue<Double> firstGroup) {
+						if (firstGroup.size() == 0) {
+							firstGroup.add(0.0);
+						}
+					}
+
+					private void addSentimentScoreToList(SentenceAnalysisPipeline analysisPipeline,
+							List<CoreMap> sentences, ConcurrentLinkedQueue<Double> firstGroup, int i) {
+						try {
+							firstGroup.add(analysisPipeline.extractSentiment(sentences.get(i)));
 						} catch (Exception e) {
 							e.printStackTrace();
 						}

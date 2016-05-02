@@ -2,6 +2,8 @@ package com.socialinspectors.analyzer.model;
 
 import static org.junit.Assert.*;
 
+import java.util.concurrent.ConcurrentLinkedQueue;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,8 +18,8 @@ public class MLPOutputNormalizerTest {
 	@Before
 	public void before() {
 		normalizer = new MLPOutputNormalizer();
-
 	}
+
 
 	@Test
 	public void testNormalize() throws Exception {

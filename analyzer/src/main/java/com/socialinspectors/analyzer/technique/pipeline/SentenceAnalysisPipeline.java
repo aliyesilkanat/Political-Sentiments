@@ -16,7 +16,7 @@ import edu.stanford.nlp.util.CoreMap;
 public class SentenceAnalysisPipeline {
 	private static final Logger logger = LogManager.getLogger(SentenceAnalysisPipeline.class);
 
-	public double extractSentiment(CoreMap sentence) throws Exception {
+	public double extractSentiment(CoreMap sentence) {
 		String split = splitSentence(sentence);
 		CoreMap splittedSent = sentence;
 		if (split != null) {

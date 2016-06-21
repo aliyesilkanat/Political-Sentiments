@@ -31,7 +31,7 @@ public class AdjectiveAndVerbCalculator {
 		return logger;
 	}
 
-	private double extractOneSentenceAdjectiveSentiment(SemanticGraph semanticGraph) throws Exception {
+	private double extractOneSentenceAdjectiveSentiment(SemanticGraph semanticGraph) {
 
 		// get adjectives list
 		List<IndexedWord> adjectiveList = semanticGraph.getAllNodesByPartOfSpeechPattern("JJ");
@@ -55,7 +55,7 @@ public class AdjectiveAndVerbCalculator {
 		return lemma;
 	}
 
-	public AnalysisResultHolder getSentiment(CoreMap sentence) throws Exception {
+	public AnalysisResultHolder getSentiment(CoreMap sentence)  {
 		SemanticGraph semanticGraph = sentence.get(CollapsedDependenciesAnnotation.class);
 		double adjPolarity = extractOneSentenceAdjectiveSentiment(semanticGraph);
 		double verbPolarity = getVerbPolarity(semanticGraph);
@@ -115,7 +115,7 @@ public class AdjectiveAndVerbCalculator {
 	}
 
 	public void traversAdjectives(SemanticGraph semanticGraph, List<IndexedWord> adjectiveList,
-			ConcurrentLinkedQueue<Double> adjectivesPolarity) throws Exception {
+			ConcurrentLinkedQueue<Double> adjectivesPolarity)  {
 		double polarity = 0;
 		for (IndexedWord adjective : adjectiveList) {
 			String lemma = getLemmaFromWord(adjective.originalText());

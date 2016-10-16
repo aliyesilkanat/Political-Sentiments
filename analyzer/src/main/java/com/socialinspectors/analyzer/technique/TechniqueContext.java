@@ -24,6 +24,7 @@ public class TechniqueContext {
 
 	public TechniqueStrategy getTechnique() {
 		return technique;
+		
 	}
 
 	private TechniqueStrategy technique;

@@ -62,7 +62,7 @@ public class Adjective extends MeaningfulObject {
 	 *            word
 	 * @return first lemma of the word
 	 */
-	private String getLemmaFromWord(String adjective) {
+	public String getLemmaFromWord(String adjective) {
 		String lemma = adjective;
 		Annotation annotation = new Annotation(adjective);
 		CoreNlpPipeline.getPipeline().annotate(annotation);

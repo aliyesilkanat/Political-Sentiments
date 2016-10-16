@@ -22,16 +22,16 @@ import edu.stanford.nlp.semgraph.SemanticGraphEdge;
 import edu.stanford.nlp.util.CoreMap;
 
 public class AdjectiveAndVerbCalculator {
-	private static final String NEGATION_MODIFIER = "neg";
+	public static final String NEGATION_MODIFIER = "neg";
 	private static final Logger logger = LogManager.getLogger(AdjectiveAndVerbCalculator.class);
-	private static final String[] SKIPPED_VERBS = { "am", "is", "are", "do", "have", "was", "were", "be" };
-	private static final String[] VERBS = { "VB", "VBD", "VBG", "VBN", "VBP", "VBZ " };
+	public static final String[] SKIPPED_VERBS = { "am", "is", "are", "do", "have", "was", "were", "be" };
+	public static final String[] VERBS = { "VB", "VBD", "VBG", "VBN", "VBP", "VBZ " };
 
 	public static Logger getLogger() {
 		return logger;
 	}
 
-	private double extractOneSentenceAdjectiveSentiment(SemanticGraph semanticGraph) {
+	public double extractOneSentenceAdjectiveSentiment(SemanticGraph semanticGraph) {
 
 		// get adjectives list
 		List<IndexedWord> adjectiveList = semanticGraph.getAllNodesByPartOfSpeechPattern("JJ");
@@ -47,7 +47,7 @@ public class AdjectiveAndVerbCalculator {
 	 *            word
 	 * @return first lemma of the word
 	 */
-	private String getLemmaFromWord(String adjective) {
+	public String getLemmaFromWord(String adjective) {
 		Annotation annotation = new Annotation(adjective);
 		CoreNlpPipeline.getPipeline().annotate(annotation);
 		String lemma = annotation.get(SentencesAnnotation.class).get(0).get(TokensAnnotation.class).get(0)
@@ -67,7 +67,7 @@ public class AdjectiveAndVerbCalculator {
 		return holder;
 	}
 
-	private double getVerbPolarity(SemanticGraph semanticGraph) {
+	public double getVerbPolarity(SemanticGraph semanticGraph) {
 		double verbPolarity = 0;
 		boolean foundNeg = false;
 		for (String verbConst : VERBS) {
@@ -138,7 +138,7 @@ public class AdjectiveAndVerbCalculator {
 		}
 	}
 
-	private double traverseDependentEdges(double polarity, List<SemanticGraphEdge> posList, IndexedWord adjective) {
+	public double traverseDependentEdges(double polarity, List<SemanticGraphEdge> posList, IndexedWord adjective) {
 		for (SemanticGraphEdge semanticGraphEdge : posList) {
 			if (semanticGraphEdge.getRelation().toString().equals(NEGATION_MODIFIER)) {
 				if (getLogger().isDebugEnabled()) {

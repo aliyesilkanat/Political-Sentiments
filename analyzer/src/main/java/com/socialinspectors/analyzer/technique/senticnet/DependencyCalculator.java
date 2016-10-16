@@ -18,10 +18,10 @@ import edu.stanford.nlp.trees.GrammaticalRelation;
 import edu.stanford.nlp.util.CoreMap;
 
 public class DependencyCalculator extends SenticNetCalculator {
-	private static final String ADJECTIVE = "JJ";
-	private static final String ADJECTIVAL_MODIFIER = "amod";
-	private static final String NEGATION_MODIFIER = "neg";
-	private static final String COPULA = "cop";
+	public static final String ADJECTIVE = "JJ";
+	public static final String ADJECTIVAL_MODIFIER = "amod";
+	public static final String NEGATION_MODIFIER = "neg";
+	public static final String COPULA = "cop";
 
 	@Override
 	public double getSentiment(String tweet) throws Exception {

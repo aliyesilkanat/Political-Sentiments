@@ -32,7 +32,7 @@ public class SentenceAnalysisPipeline {
 
 	}
 
-	private String splitSentence(CoreMap sentence) {
+	public String splitSentence(CoreMap sentence) {
 		String split = null;
 		try {
 			split = new SentenceSplitter().split(sentence);

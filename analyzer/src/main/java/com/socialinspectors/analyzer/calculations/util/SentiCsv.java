@@ -11,7 +11,7 @@ public class SentiCsv {
 	public static void main(String[] args) {
 
 		try {
-			new SentiCsv().run("normalized_splitted_sentences_scores.csv");
+			new SentiCsv().run("Result_clean_phase1_testresults.csv");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

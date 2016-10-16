@@ -10,9 +10,9 @@ public class TargetObject extends MeaningfulObject {
 	private IndexedWord modifiedObject = null;
 
 	public TargetObject(IndexedWord modifiedObject, IndexedWord adjectiveWord, boolean foundNeg) {
-		adjectiveList = new ArrayList<Adjective>();
+		setAdjectiveList(new ArrayList<Adjective>());
 		this.modifiedObject = modifiedObject;
-		adjectiveList.add(new Adjective(foundNeg, adjectiveWord));
+		getAdjectiveList().add(new Adjective(foundNeg, adjectiveWord));
 
 	}
 
@@ -20,11 +20,11 @@ public class TargetObject extends MeaningfulObject {
 	public double getSentiment() {
 
 		double totalSum = 0;
-		for (Adjective adjective : adjectiveList) {
+		for (Adjective adjective : getAdjectiveList()) {
 			totalSum += adjective.getSentiment();
 		}
 		if (totalSum != 0) {
-			totalSum = totalSum / adjectiveList.size();
+			totalSum = totalSum / getAdjectiveList().size();
 		}
 		return totalSum;
 	}
@@ -38,7 +38,15 @@ public class TargetObject extends MeaningfulObject {
 	}
 
 	public void addNewAdjective(IndexedWord adjectiveWord, boolean foundNeg) {
-		adjectiveList.add(new Adjective(foundNeg, adjectiveWord));
+		getAdjectiveList().add(new Adjective(foundNeg, adjectiveWord));
 
+	}
+
+	public List<Adjective> getAdjectiveList() {
+		return adjectiveList;
+	}
+
+	public void setAdjectiveList(List<Adjective> adjectiveList) {
+		this.adjectiveList = adjectiveList;
 	}
 }

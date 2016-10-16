@@ -15,10 +15,9 @@ public class BestScoreCalculator {
 		List<Double> index = new ArrayList<Double>();
 		int min = -1000;
 		try {
-
 			for (double i = min; i < 1000; i++) {
 				double i2 = i / 10000;
-				scores.add(new BestScoreCalculator().run("normalized_splitted_sentences_scores.csv", i2));
+				scores.add(new BestScoreCalculator().run("Result_clean_phase4_testresults.csv", i2));
 				index.add(i2);
 			}
 		} catch (Exception e) {

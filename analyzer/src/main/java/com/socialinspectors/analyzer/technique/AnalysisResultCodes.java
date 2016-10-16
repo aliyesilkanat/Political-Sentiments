@@ -1,5 +1,4 @@
 package com.socialinspectors.analyzer.technique;
-
 public class AnalysisResultCodes {
 	public static final int NEUTRAL = 0;
 	public static final int POSITIVE = 1;
